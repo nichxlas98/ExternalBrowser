@@ -10,5 +10,3 @@ obj/
 *.exe
 *.o
 *.so
-*.sln
-*.csproj
