@@ -13,7 +13,6 @@ namespace ExternalBrowser
         [STAThread]
         static void Main()
         {   
-            Console.WriteLine("DEBUGGER");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
