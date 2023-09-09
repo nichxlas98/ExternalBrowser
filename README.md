@@ -6,6 +6,8 @@ Currently this only works with games that utilize BORDERLESS WINDOWS, otherwise 
 
 In-Game Example(s):
 ![image](https://github.com/nichxlas98/ExternalBrowser/assets/107213497/e4309780-6552-47da-af5e-2c22acd120a2)
+![image](https://i.imgur.com/F29yipk.png)
+![image](https://i.imgur.com/GfngiaO.png)
 
 
 TBA:
