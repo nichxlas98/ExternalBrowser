@@ -1,0 +1,15 @@
+  <Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <!-- Other properties... -->
+      <PlatformTarget>x64</PlatformTarget>
+       <TargetFramework>net4.7.2</TargetFramework>
+       <UseWPF>true</UseWPF>
+       <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="CefSharp.WinForms" Version="115.3.130" />
+      <PackageReference Include="InputSimulatorPlus" Version="1.0.7" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+  </Project>
