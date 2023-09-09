@@ -5,7 +5,7 @@ An overlay like browser that functions by allowing a user to view a browser-wind
 Currently this only works with games that utilize BORDERLESS WINDOWS, otherwise it'll cause the game to tab out - which defeats the purpose of the browser.
 
 In-Game Example(s):
-![image](https://i.imgur.com/0jl7Tzs.png)
+![image](https://i.imgur.com/kNSy50Q.png)
 ![image](https://i.imgur.com/F29yipk.png)
 ![image](https://i.imgur.com/GfngiaO.png)
 
