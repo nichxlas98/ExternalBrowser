@@ -4,6 +4,8 @@ An overlay like browser that functions by allowing a user to view a browser-wind
 
 Currently this only works with games that utilize BORDERLESS WINDOWS, otherwise it'll cause the game to tab out - which defeats the purpose of the browser.
 
+In-Game Example: https://i.imgur.com/iUP0xuN.png
+
 TBA:
 - Customizable hotkey.
 - Usage tutorial.
