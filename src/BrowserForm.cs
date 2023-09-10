@@ -1,11 +1,10 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
-using CefSharp;
 using CefSharp.WinForms;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Windows.Media.Animation;
+using System.Net;
+using CefSharp;
 
 
 namespace ExternalBrowser
@@ -13,7 +12,7 @@ namespace ExternalBrowser
     public class BrowserForm : Form
     {
         private readonly ChromiumWebBrowser webBrowser;
-        private readonly Dictionary<ToolStripMenuItem, TabInfo> openTabs = new Dictionary<ToolStripMenuItem, TabInfo>();
+        private Dictionary<ToolStripMenuItem, TabInfo> openTabs = new Dictionary<ToolStripMenuItem, TabInfo>();
         private static readonly ContextMenuStrip tabsDropdown = new ContextMenuStrip();
 
         private static bool isFormVisible = true;
@@ -34,7 +33,10 @@ namespace ExternalBrowser
             };
 
             this.Shown += new EventHandler(Form1_Shown);
-            
+
+            // Add an event handler for the LoadError event to capture CefSharp errors
+            webBrowser.LoadError += Browser_LoadError;
+
             JsHandler jh = new JsHandler();
             webBrowser.JsDialogHandler = jh;
 
@@ -63,6 +65,17 @@ namespace ExternalBrowser
         {
             Left = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
             Top = (Screen.PrimaryScreen.Bounds.Height - Height) / 2;
+        }
+
+        private void Browser_LoadError(object sender, LoadErrorEventArgs e)
+        {
+            // To Be Removed - error MessageBox example for later
+            //string errorMessage = $"Error loading URL '{e.FailedUrl}': {e.ErrorText}";
+            //MessageBox.Show(errorMessage, "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            // URL doesn't exist, so search for it.
+            string url = e.FailedUrl.Replace("http://", "");
+            webBrowser.Load("https://google.com/search?q=" + url.Substring(0, url.Length - 1));
         }
 
         private void RegisterControls()
@@ -135,8 +148,8 @@ namespace ExternalBrowser
             // Add event handlers for buttons
             navigateButton.Click += (sender, e) =>
             {
-                webBrowser.Load(searchBar.Text);
-                AddNewTab(searchBar.Text, searchBar.Text);
+                string urlTitle = searchBar.Text.Replace("https://", "").Replace("http://", "");
+                webBrowser.Load(AddNewTab(searchBar.Text, urlTitle));
             };
 
             hideButton.Click += (sender, e) =>
@@ -236,17 +249,26 @@ namespace ExternalBrowser
         {
             tabsDropdown.Items.Remove(tabItem);
             openTabs.Remove(tabItem);
+
+            if (webBrowser.Address == url)
+            {
+                OpenTab(AddNewTab("https://google.com", "Google"));
+            }
         }
 
-        private void AddNewTab(string url, string title)
+        private string AddNewTab(string url, string title)
         {
+
             TabInfo tabInfo = new TabInfo { Url = url, Title = title };
             ToolStripMenuItem tabItem = new ToolStripMenuItem(title);
+
             tabItem.Click += (sender, e) => OpenTab(url);
             tabItem.MouseDown += (sender, e) => CloseTab(tabItem, url);
 
             openTabs.Add(tabItem, tabInfo);
             tabsDropdown.Items.Add(tabItem);
+
+            return url;
         }
 
         private void ViewTabs(Button viewTabsButton)
@@ -271,6 +293,5 @@ namespace ExternalBrowser
 
             tabsDropdown.Show(viewTabsButton, new System.Drawing.Point(0, viewTabsButton.Height));
         }
-
     }
 }
