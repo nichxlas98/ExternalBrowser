@@ -1,10 +1,10 @@
 using System;
-using System.Threading;
+using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
+using static ExternalBrowser.DisHook;
 
 namespace ExternalBrowser
 {
@@ -15,11 +15,12 @@ namespace ExternalBrowser
         {   
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            
             // Initialize CefSharp
             CefSettings settings = new CefSettings
             {
                 CachePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\CEF",
+                
                 // Enable audio capture permission
                 CefCommandLineArgs = { ["enable-media-stream"] = "1" }
             };

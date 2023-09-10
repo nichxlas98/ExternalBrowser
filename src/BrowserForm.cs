@@ -32,10 +32,10 @@ namespace ExternalBrowser
                 Dock = DockStyle.Fill
             };
 
-            this.Shown += new EventHandler(Form1_Shown);
 
             // Add an event handler for the LoadError event to capture CefSharp errors
             webBrowser.LoadError += Browser_LoadError;
+            this.Shown += new EventHandler(Form1_Shown);
 
             JsHandler jh = new JsHandler();
             webBrowser.JsDialogHandler = jh;
