@@ -15,3 +15,4 @@ TBA:
 - Usage tutorial.
 - Ability to work with games that don't support Borderless Windows.
 - Settings menu, and persistant settings.
+- Ability to close active tabs when right clicking them.
