@@ -5,6 +5,7 @@ using CefSharp;
 using CefSharp.WinForms;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Windows.Media.Animation;
 
 
 namespace ExternalBrowser
@@ -32,6 +33,11 @@ namespace ExternalBrowser
                 Dock = DockStyle.Fill
             };
 
+            this.Shown += new EventHandler(Form1_Shown);
+            
+            JsHandler jh = new JsHandler();
+            webBrowser.JsDialogHandler = jh;
+
             RegisterControls();
             AddNewTab("https://discord.com/channels/@me", "https://discord.com/channels/@me");
 
@@ -51,6 +57,12 @@ namespace ExternalBrowser
             });
 
             hotkeyThread.Start();
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            Left = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
+            Top = (Screen.PrimaryScreen.Bounds.Height - Height) / 2;
         }
 
         private void RegisterControls()
@@ -83,26 +95,28 @@ namespace ExternalBrowser
             Label widthLabel = new Label
             {
                 Text = "Width:",
-                Location = new System.Drawing.Point(editSizeButton.Right + 10, editSizeButton.Top + 3),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Location = new System.Drawing.Point(editSizeButton.Right + 10, editSizeButton.Top),
             };
 
             TextBox widthTextBox = new TextBox
             {
                 Location = new System.Drawing.Point(widthLabel.Right + 5, editSizeButton.Top),
-                Width = 60,
+                Width = 35,
                 Text = Width.ToString(),
             };
 
             Label heightLabel = new Label
             {
                 Text = "Height:",
-                Location = new System.Drawing.Point(widthTextBox.Right + 10, editSizeButton.Top + 3),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Location = new System.Drawing.Point(widthTextBox.Right + 10, editSizeButton.Top),
             };
 
             TextBox heightTextBox = new TextBox
             {
                 Location = new System.Drawing.Point(heightLabel.Right + 5, editSizeButton.Top),
-                Width = 60,
+                Width = 35,
                 Text = Height.ToString(),
             };
 
@@ -159,6 +173,7 @@ namespace ExternalBrowser
 
             exitButton.Click += (sender, e) =>
             {
+                Application.Exit();
                 Close(); // Close the application
             };
 
@@ -170,14 +185,17 @@ namespace ExternalBrowser
             // Add controls to the form
             Controls.Add(viewTabsButton);
             Controls.Add(searchBar);
+            
             Controls.Add(navigateButton);
             Controls.Add(hideButton);
             Controls.Add(exitButton);
             Controls.Add(editSizeButton);
+
             Controls.Add(heightLabel);
             Controls.Add(heightTextBox);
             Controls.Add(widthLabel);
             Controls.Add(widthTextBox);
+
             Controls.Add(webBrowser);
         }
 
