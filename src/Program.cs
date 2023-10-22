@@ -1,10 +1,8 @@
 using System;
-using System.Linq;
-using System.Net;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
-using static ExternalBrowser.DisHook;
+using ExternalBrowser.Forms;
 
 namespace ExternalBrowser
 {
