@@ -17,6 +17,7 @@ namespace ExternalBrowser.Forms
         private static bool isFormVisible = true;
         private static int appHeight = 480;
         private static int appWidth = 854;
+        private static int hotkey = HotkeyConfig.LoadFromJson().Hotkey;
 
         private SettingForm settings;
 
@@ -50,10 +51,10 @@ namespace ExternalBrowser.Forms
             // Create a thread for listening to the hotkey
             Thread hotkeyThread = new Thread(() =>
             {
-                const int VK_RIGHT_ALT = 0xA5; // Virtual key code for RIGHT_ALT
+                //const int VK_RIGHT_ALT = 0xA5; // Virtual key code for RIGHT_ALT
                 while (true)
                 {
-                    if (NativeMethods.GetAsyncKeyState(VK_RIGHT_ALT) != 0)
+                    if (NativeMethods.GetAsyncKeyState(hotkey) != 0)
                     {
                         ToggleFormVisibility();
                         Thread.Sleep(100); // Sleep to avoid rapid toggling due to key repetition
@@ -177,6 +178,13 @@ namespace ExternalBrowser.Forms
             // Move the form to the new position (center of the screen)
             Left = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
             Top = (Screen.PrimaryScreen.Bounds.Height - Height) / 2;
+        }
+
+        public void SetHotkey(int key)
+        {
+            hotkey = key;
+            var keyConfig = new HotkeyConfig(key);
+            keyConfig.SaveToJson();
         }
 
         public void ToggleFormVisibility()

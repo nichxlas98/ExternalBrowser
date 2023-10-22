@@ -19,6 +19,8 @@ namespace ExternalBrowser.Forms
         private Button homeBtn;
         private TextBox contactInfoTB;
         private Label reportInfoL;
+        private Label label1;
+        private ComboBox hotkeyCB;
         private BrowserForm mainForm;
 
         public SettingForm(BrowserForm mainForm)
@@ -42,6 +44,8 @@ namespace ExternalBrowser.Forms
             this.homeBtn = new System.Windows.Forms.Button();
             this.contactInfoTB = new System.Windows.Forms.TextBox();
             this.reportInfoL = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.hotkeyCB = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // windowSizeL
@@ -175,16 +179,96 @@ namespace ExternalBrowser.Forms
             // 
             this.reportInfoL.AutoSize = true;
             this.reportInfoL.Location = new System.Drawing.Point(221, 355);
-            this.reportInfoL.Name = "label1";
+            this.reportInfoL.Name = "reportInfoL";
             this.reportInfoL.Size = new System.Drawing.Size(196, 39);
             this.reportInfoL.TabIndex = 12;
             this.reportInfoL.Text = "Use https://pastebin.com/ and add it to\r\nthe issue description for detailed repor" +
     "ts.\r\nOr use github\'s issue system.";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 16);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Hide Hotkey:";
+            // 
+            // hotkeyCB
+            // 
+            this.hotkeyCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.hotkeyCB.FormattingEnabled = true;
+            this.hotkeyCB.Items.AddRange(new object[] {
+            "VK_BACK",
+            "VK_TAB",
+            "VK_ENTER",
+            "VK_SHIFT",
+            "VK_CTRL",
+            "VK_ALT",
+            "VK_PAUSE",
+            "VK_CAPS_LOCK",
+            "VK_ESCAPE",
+            "VK_SPACE",
+            "VK_PAGE_UP",
+            "VK_PAGE_DOWN",
+            "VK_END",
+            "VK_HOME",
+            "VK_LEFT",
+            "VK_UP",
+            "VK_RIGHT",
+            "VK_DOWN",
+            "VK_PRINT_SCREEN",
+            "VK_INSERT",
+            "VK_DELETE",
+            "VK_0",
+            "VK_1",
+            "VK_2",
+            "VK_3",
+            "VK_4",
+            "VK_5",
+            "VK_6",
+            "VK_7",
+            "VK_8",
+            "VK_9",
+            "VK_A",
+            "VK_B",
+            "VK_C",
+            "VK_D",
+            "VK_E",
+            "VK_F",
+            "VK_G",
+            "VK_H",
+            "VK_I",
+            "VK_J",
+            "VK_K",
+            "VK_L",
+            "VK_M",
+            "VK_N",
+            "VK_O",
+            "VK_P",
+            "VK_Q",
+            "VK_R",
+            "VK_S",
+            "VK_T",
+            "VK_U",
+            "VK_V",
+            "VK_W",
+            "VK_X",
+            "VK_Y",
+            "VK_Z"});
+            this.hotkeyCB.Location = new System.Drawing.Point(105, 76);
+            this.hotkeyCB.Name = "hotkeyCB";
+            this.hotkeyCB.Size = new System.Drawing.Size(108, 21);
+            this.hotkeyCB.TabIndex = 14;
+            this.hotkeyCB.SelectedIndexChanged += new System.EventHandler(this.hotkeyCB_SelectedIndexChanged);
+            // 
             // SettingForm
             // 
             this.ClientSize = new System.Drawing.Size(464, 428);
             this.ControlBox = false;
+            this.Controls.Add(this.hotkeyCB);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.reportInfoL);
             this.Controls.Add(this.contactInfoTB);
             this.Controls.Add(this.homeBtn);
@@ -267,6 +351,12 @@ namespace ExternalBrowser.Forms
         {
             this.Hide();
             mainForm.ToggleFormVisibility();
+        }
+
+        private void hotkeyCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int key = Key.FromString(hotkeyCB.Text);
+            mainForm.SetHotkey(key);
         }
     }
 }
