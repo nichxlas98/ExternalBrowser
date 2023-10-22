@@ -14,8 +14,7 @@ In-Game Example(s):
 
 
 TBA:
-- Customizable hotkey.
 - Usage tutorial.
 - Ability to work with games that don't support Borderless Windows.
-- Settings menu, and persistant settings.
+- Persistant settings, opened tabs, passwords potentially?
 - Ability to close active tabs when right clicking them.
