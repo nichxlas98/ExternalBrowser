@@ -3,15 +3,14 @@ using System.Threading;
 using System.Windows.Forms;
 using CefSharp.WinForms;
 using System.Collections.Generic;
-using System.Net;
 using CefSharp;
 
 
-namespace ExternalBrowser
+namespace ExternalBrowser.Forms
 {
     public class BrowserForm : Form
     {
-        private readonly ChromiumWebBrowser webBrowser;
+        private ChromiumWebBrowser webBrowser;
         private Dictionary<ToolStripMenuItem, TabInfo> openTabs = new Dictionary<ToolStripMenuItem, TabInfo>();
         private static readonly ContextMenuStrip tabsDropdown = new ContextMenuStrip();
 
@@ -19,11 +18,18 @@ namespace ExternalBrowser
         private static int appHeight = 480;
         private static int appWidth = 854;
 
+        private SettingForm settings;
+
         public BrowserForm()
         {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
             Text = "ExternalBrowser";
-            Width = 854;
-            Height = 480;
+            Width = appWidth;
+            Height = appHeight;
             FormBorderStyle = FormBorderStyle.None;
             TopMost = true;
 
@@ -32,8 +38,6 @@ namespace ExternalBrowser
                 Dock = DockStyle.Fill
             };
 
-
-            // Add an event handler for the LoadError event to capture CefSharp errors
             webBrowser.LoadError += Browser_LoadError;
             this.Shown += new EventHandler(Form1_Shown);
 
@@ -75,7 +79,9 @@ namespace ExternalBrowser
 
             // URL doesn't exist, so search for it.
             string url = e.FailedUrl.Replace("http://", "");
-            webBrowser.Load("https://google.com/search?q=" + url.Substring(0, url.Length - 1));
+
+            // Define browser error specifics later
+            //webBrowser.Load("https://google.com/search?q=" + url.Substring(0, url.Length - 1));
         }
 
         private void RegisterControls()
@@ -99,38 +105,10 @@ namespace ExternalBrowser
                 Location = new System.Drawing.Point(navigateButton.Right + 10, 10)
             };
 
-            Button editSizeButton = new Button
+            Button settingsButton = new Button
             {
-                Text = "Edit Size",
+                Text = "Settings",
                 Location = new System.Drawing.Point(10, navigateButton.Bottom + 10)
-            };
-
-            Label widthLabel = new Label
-            {
-                Text = "Width:",
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Location = new System.Drawing.Point(editSizeButton.Right + 10, editSizeButton.Top),
-            };
-
-            TextBox widthTextBox = new TextBox
-            {
-                Location = new System.Drawing.Point(widthLabel.Right + 5, editSizeButton.Top),
-                Width = 35,
-                Text = Width.ToString(),
-            };
-
-            Label heightLabel = new Label
-            {
-                Text = "Height:",
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Location = new System.Drawing.Point(widthTextBox.Right + 10, editSizeButton.Top),
-            };
-
-            TextBox heightTextBox = new TextBox
-            {
-                Location = new System.Drawing.Point(heightLabel.Right + 5, editSizeButton.Top),
-                Width = 35,
-                Text = Height.ToString(),
             };
 
             Button exitButton = new Button
@@ -157,7 +135,7 @@ namespace ExternalBrowser
                 viewTabsButton.Visible = !viewTabsButton.Visible;
                 searchBar.Visible = !searchBar.Visible;
                 navigateButton.Visible = !navigateButton.Visible;
-                editSizeButton.Visible = !editSizeButton.Visible;
+                settingsButton.Visible = !settingsButton.Visible;
                 heightLabel.Visible = !heightLabel.Visible;
                 heightTextBox.Visible = !heightTextBox.Visible;
                 widthLabel.Visible = !widthLabel.Visible;
@@ -165,23 +143,11 @@ namespace ExternalBrowser
                 exitButton.Visible = !exitButton.Visible;
             };
 
-            editSizeButton.Click += (sender, e) =>
+            settingsButton.Click += (sender, e) =>
             {
-                // Parse the String provided in the Text boxes as integers.
-                if (int.TryParse(widthTextBox.Text, out int newWidth) &&
-                    int.TryParse(heightTextBox.Text, out int newHeight))
-                {
-                    // Resize application constants for consistency using the integers provided.
-                    Width = newWidth;
-                    Height = newHeight;
-
-                    appWidth = newWidth;
-                    appHeight = newHeight;
-
-                    // Move the form to the new position (center of the screen)
-                    Left = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
-                    Top = (Screen.PrimaryScreen.Bounds.Height - Height) / 2;
-                }
+                ToggleFormVisibility();
+                settings = new SettingForm(this);
+                settings.Show();
             };
 
             exitButton.Click += (sender, e) =>
@@ -202,7 +168,7 @@ namespace ExternalBrowser
             Controls.Add(navigateButton);
             Controls.Add(hideButton);
             Controls.Add(exitButton);
-            Controls.Add(editSizeButton);
+            Controls.Add(settingsButton);
 
             Controls.Add(heightLabel);
             Controls.Add(heightTextBox);
@@ -212,7 +178,17 @@ namespace ExternalBrowser
             Controls.Add(webBrowser);
         }
 
-        private void ToggleFormVisibility()
+        public void SetWindowSize(int height, int width)
+        {
+            appWidth = width;
+            appHeight = height;
+
+            // Move the form to the new position (center of the screen)
+            Left = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
+            Top = (Screen.PrimaryScreen.Bounds.Height - Height) / 2;
+        }
+
+        public void ToggleFormVisibility()
         {
             Invoke((MethodInvoker)delegate
             {
@@ -228,6 +204,8 @@ namespace ExternalBrowser
                 else
                 {
                     //Show();
+                    settings?.Hide();
+
                     BringToFront();
                     Width = appWidth;
                     Height = appHeight;
@@ -250,10 +228,12 @@ namespace ExternalBrowser
             tabsDropdown.Items.Remove(tabItem);
             openTabs.Remove(tabItem);
 
+            /* Not working correctly
             if (webBrowser.Address == url)
             {
                 OpenTab(AddNewTab("https://google.com", "Google"));
             }
+            */
         }
 
         private string AddNewTab(string url, string title)
