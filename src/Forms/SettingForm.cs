@@ -18,6 +18,7 @@ namespace ExternalBrowser.Forms
         private Label windowSizeL;
         private Button homeBtn;
         private TextBox contactInfoTB;
+        private Label reportInfoL;
         private BrowserForm mainForm;
 
         public SettingForm(BrowserForm mainForm)
@@ -40,6 +41,7 @@ namespace ExternalBrowser.Forms
             this.settingsLabel = new System.Windows.Forms.Label();
             this.homeBtn = new System.Windows.Forms.Button();
             this.contactInfoTB = new System.Windows.Forms.TextBox();
+            this.reportInfoL = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // windowSizeL
@@ -169,10 +171,21 @@ namespace ExternalBrowser.Forms
             this.contactInfoTB.TabIndex = 11;
             this.contactInfoTB.Text = "Contact Info - Email, Discord, etc...";
             // 
+            // reportInfoL
+            // 
+            this.reportInfoL.AutoSize = true;
+            this.reportInfoL.Location = new System.Drawing.Point(221, 355);
+            this.reportInfoL.Name = "label1";
+            this.reportInfoL.Size = new System.Drawing.Size(196, 39);
+            this.reportInfoL.TabIndex = 12;
+            this.reportInfoL.Text = "Use https://pastebin.com/ and add it to\r\nthe issue description for detailed repor" +
+    "ts.\r\nOr use github\'s issue system.";
+            // 
             // SettingForm
             // 
             this.ClientSize = new System.Drawing.Size(464, 428);
             this.ControlBox = false;
+            this.Controls.Add(this.reportInfoL);
             this.Controls.Add(this.contactInfoTB);
             this.Controls.Add(this.homeBtn);
             this.Controls.Add(this.settingsLabel);
