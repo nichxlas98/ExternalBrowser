@@ -136,10 +136,6 @@ namespace ExternalBrowser.Forms
                 searchBar.Visible = !searchBar.Visible;
                 navigateButton.Visible = !navigateButton.Visible;
                 settingsButton.Visible = !settingsButton.Visible;
-                heightLabel.Visible = !heightLabel.Visible;
-                heightTextBox.Visible = !heightTextBox.Visible;
-                widthLabel.Visible = !widthLabel.Visible;
-                widthTextBox.Visible = !widthTextBox.Visible;
                 exitButton.Visible = !exitButton.Visible;
             };
 
