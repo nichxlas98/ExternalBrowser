@@ -166,11 +166,6 @@ namespace ExternalBrowser.Forms
             Controls.Add(exitButton);
             Controls.Add(settingsButton);
 
-            Controls.Add(heightLabel);
-            Controls.Add(heightTextBox);
-            Controls.Add(widthLabel);
-            Controls.Add(widthTextBox);
-
             Controls.Add(webBrowser);
         }
 
