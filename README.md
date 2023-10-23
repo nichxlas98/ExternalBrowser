@@ -4,6 +4,9 @@ An overlay like browser that functions by allowing a user to view a browser-wind
 
 Currently this only works with games that utilize BORDERLESS WINDOWS, otherwise it'll cause the game to tab out - which defeats the purpose of the browser.
 
+Download:
+![image](https://github.com/nichxlas98/ExternalBrowser/releases)
+
 In-Game Example(s):
 ![image](https://i.imgur.com/kNSy50Q.png)
 ![image](https://i.imgur.com/F29yipk.png)
@@ -11,8 +14,7 @@ In-Game Example(s):
 
 
 TBA:
-- Customizable hotkey.
 - Usage tutorial.
 - Ability to work with games that don't support Borderless Windows.
-- Settings menu, and persistant settings.
+- Persistant settings, opened tabs, passwords potentially?
 - Ability to close active tabs when right clicking them.
