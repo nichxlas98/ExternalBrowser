@@ -59,7 +59,7 @@ namespace ExternalBrowser.Forms
                         ToggleFormVisibility();
                         Thread.Sleep(100); // Sleep to avoid rapid toggling due to key repetition
                     }
-                    Thread.Sleep(10); // Polling interval
+                    Thread.Sleep(150); // Polling interval
                 }
             });
 
